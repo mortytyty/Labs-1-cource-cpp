@@ -1,0 +1,4 @@
+﻿  lb6.cpp
+C:\Users\ivanp\source\repos\lb6\lb6\lb6.cpp(39,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+C:\Users\ivanp\source\repos\lb6\lb6\lb6.cpp(40,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  lb6.vcxproj -> C:\Users\ivanp\source\repos\lb6\x64\Debug\lb6.exe

@@ -1,0 +1,4 @@
+﻿  lb7.cpp
+C:\Users\ivanp\source\repos\lb7\lb7\lb7.cpp(40,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+C:\Users\ivanp\source\repos\lb7\lb7\lb7.cpp(41,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  lb7.vcxproj -> C:\Users\ivanp\source\repos\lb7\x64\Debug\lb7.exe

@@ -1,0 +1,4 @@
+﻿  laba5.cpp
+C:\Users\ivanp\source\repos\laba5\laba5\laba5.cpp(40,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+C:\Users\ivanp\source\repos\laba5\laba5\laba5.cpp(41,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  laba5.vcxproj -> C:\Users\ivanp\source\repos\laba5\Debug\laba5.exe
