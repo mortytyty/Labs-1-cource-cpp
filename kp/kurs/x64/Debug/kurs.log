@@ -1,0 +1,4 @@
+﻿  kurs.cpp
+C:\Users\ivanp\source\repos\kp\kurs\kurs.cpp(22,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+C:\Users\ivanp\source\repos\kp\kurs\kurs.cpp(96,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  kurs.vcxproj -> C:\Users\ivanp\source\repos\kp\x64\Debug\kurs.exe
