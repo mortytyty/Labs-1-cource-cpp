@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\ivanp\Desktop\LR2-master\LR2-master\lr2k2\main.cpp(102,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\ivanp\Desktop\LR2-master\LR2-master\lr2k2\main.cpp(147,21): warning C4101: i: неиспользованная локальная переменная
+  lr2k2.vcxproj -> C:\Users\ivanp\Desktop\LR2-master\LR2-master\x64\Debug\lr2k2.exe
