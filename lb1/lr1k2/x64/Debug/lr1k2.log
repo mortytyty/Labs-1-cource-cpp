@@ -1,0 +1,6 @@
+﻿  main.cpp
+C:\Users\ivanp\Desktop\laba 1\lr1k2\main.cpp(14,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\ivanp\Desktop\laba 1\lr1k2\main.cpp(29,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\ivanp\Desktop\laba 1\lr1k2\main.cpp(39,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\ivanp\Desktop\laba 1\lr1k2\main.cpp(62,20): warning C4101: sum_sto: неиспользованная локальная переменная
+  lr1k2.vcxproj -> C:\Users\ivanp\Desktop\laba 1\x64\Debug\lr1k2.exe
