@@ -1,0 +1,5 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(510,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (ConsoleApplication2.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  ConsoleApplication2.cpp
+C:\Users\ivanp\source\repos\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(11,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\ivanp\source\repos\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(70,13): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  ConsoleApplication2.vcxproj -> C:\Users\ivanp\source\repos\ConsoleApplication2\x64\Debug\lb8.exe
