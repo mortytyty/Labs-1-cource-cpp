@@ -1,276 +1,266 @@
 ﻿#include <iostream>
-#include <windows.h>
 using namespace std;
-int** M1, ** M2, **M3;
-void fill();
-void create(int size)
-{
-	int i, j;
-	M1 = (int**)malloc(size * (sizeof(int)));
-	M2 = (int**)malloc(size * (sizeof(int)));
-	srand(time(NULL));
-	for (i = 0; i < size; i++)
-	{
-		M1[i] = (int*)malloc(size * (sizeof(int)));
-		M2[i] = (int*)malloc(size * (sizeof(int)));
-		for (j = 0 + i; j < size; j++)
-		{
-			M1[i][j] = 0;
-			M2[i][j] = rand() % 2;
-		}
-	}
+int i, j;
 
-	for (i = 0; i < size; i++)
+void InitMatrix(int** G, int n)
+{
+	srand(time(NULL));
+	for (i = 0; i < n; i++)
 	{
-		for (j = 0; j < size; j++)
+		G[i][i] = 0;
+		for (j = 0; j < i; j++)
 		{
-			M1[j][i] = M1[i][j];
-			if (i == j)
-				M1[i][j] = 0;
-			M2[j][i] = M2[i][j];
-			if (i == j)
-				M2[i][j] = 0;
+			if (rand() % 100 <= 50) //заполнение графа случайными числами
+			{
+				G[i][j] = G[j][i] = 1;
+			}
+			else
+			{
+				G[i][j] = G[j][i] = 0;
+			}
 		}
 	}
-	for (i = 0; i < size; i++)
+}
+void OutMatrix(int** G, int n)
+{
+	for (i = 0; i < n; i++)
 	{
-		for (j = 0; j < size; j++)
+		for (j = 0; j < n; j++)
 		{
-			cout << M2[i][j] << ' ';
+			cout << " " << G[i][j];
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
-void InitM3(int size) 
+void Сontraction(int** M1, int** M4, int n, int f, int s)
 {
-	int i, j;
-	M3 = (int**)malloc(size * sizeof(int));
-	for (i = 0; i < size; i++) 
+	int k = 0;
+	int l = 0;
+	M1[f][s] = M1[s][f] = 0;
+	for (i = 0; i < n; i++) 
 	{
-		M3[i] = (int*)malloc(size * sizeof(int));
-		for (j = 0; j < size; j++) 
+		if (i != f && i != s)
 		{
-			M3[i][j] = 0;
+			for (j = 0; j < n; j++) 
+			{
+				if (j != f && j != s)
+				{
+					if(M1[i][j]==1)
+						M4[k][l] = 1;
+					l++;
+				}
+			}
+			l = 0;
+			k++; 
+		}
+	}
+	for (i = 0; i < n; i++) 
+	{
+		if ((i == f || i == s))
+		{
+			for (j = 0; j < n; j++) 
+			{
+				if (j != s && j != f) 
+				{
+					if (M1[i][j] == 1) 
+					{
+						M4[n - 2][l] = 1;
+						M4[l][n - 2] = 1;
+					}
+					l++;
+				}
+			}
+			l = 0;
 		}
 	}
 }
-void identify(int size, int first, int second) 
+void Split(int** M1, int** M3, int size, int pos)
 {
-	int i, j;
-	int razn = second - first;
 	for (i = 0; i < size; i++) {
 		for (j = 0; j < size; j++) {
-			if ((i < second) && (j < second)) { M1[i][j] = M2[i][j]; } 
-			if ((i <= first) && (j == second)) { M1[i][first] += M2[i][j]; } 
-			if ((i == second) && (j < first)) { M1[first][j] += M2[i][j]; } 
-			if ((i < second) && (j > second)) { M1[i][j - 1] = M2[i][j]; } 
-			if ((j < second) && (i > second)) { M1[i - 1][j] = M2[i][j]; } 
-			if ((i == first + 1) && (j == second)) { M1[i - 1][j - razn + 1] += M2[i][j]; } 
-			if ((j == first + 1) && (i == second)) { M1[i - razn + 1][j - 1] += M2[i][j]; } 
-		}
-	}
-
-	for (i = second + 1; i < size; i++) {
-		for (j = second + 1; j < size; j++) {
-			M1[i - 1][j - 1] = M2[i][j];
-		}
-	}
-
-	for (i = 0; i < size - 1; i++) {
-		for (j = 0; j < size - 1; j++) {
-			if (M1[i][j] > 1) { M1[i][j] = 1; }
-		}
-	}
-}
-void constrict(int size, int first, int second) 
-{
-	int i, j, razn;
-
-	razn = second - first;
-	for (i = 0; i < size; i++)
-	{
-		for (j = 0; j < size; j++)
-		{
-			if ((i < second) && (j < second)) M1[i][j] = M2[i][j]; 
-			if ((i < first) && (j == second)) M1[i][first] += M2[i][j]; 
-			if ((i == second) && (j < first)) M1[first][j] += M2[i][j];
-			if ((i < second) && (j > second)) M1[i][j - 1] = M2[i][j];
-			if ((j < second) && (i > second)) M1[i - 1][j] = M2[i][j];
-			if ((i == first + 1) && (j == second)) M1[i - 1][j - razn + 1] += M2[i][j];
-			if ((j == first + 1) && (i == second)) M1[i - razn + 1][j - 1] += M2[i][j];
-		}
-	}
-
-	for (i = second + 1; i < size; i++) {
-		for (j = second + 1; j < size; j++) {
-			M1[i - 1][j - 1] = M2[i][j];
-		}
-	}
-
-	for (i = 0; i < size - 1; i++) {
-		for (j = 0; j < size - 1; j++) {
-			if (M1[i][j] > 1) { M1[i][j] = 1; }
-		}
-	}
-}
-void split(int size, int pos) 
-{
-	int i, j;
-
-	for (i = 0; i < size; i++) {
-		for (j = 0; j < size; j++) {
-			M3[i][j] = M2[i][j];
+			M3[i][j] = M1[i][j];
 			if (j == pos) {
 				if (i == pos) { M3[i][size] = 1; M3[size][i] = M3[i][size]; }
-				else { M3[i][size] = M2[i][pos]; M3[size][i] = M2[i][pos]; }
+				else { M3[i][size] = M1[i][pos]; M3[size][i] = M1[i][pos]; }
 			}
 		}
 	}
 }
-void InitM1(int size)
+void SumMatrix(int** M1, int** M2, int size)
 {
-	int i, j;
-	for (i = 0; i < size; i++)
-	{
+	for (i = 0; i < size; i++) {
 		for (j = 0; j < size; j++)
 		{
-			M1[i][j] = rand() % 2;
-		}
-	}
-	for (i = 0; i < size; i++)
-	{
-		for (j = 0; j < size; j++)
-		{
-			printf("%d ", M1[i][j]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-}
-void SumMatrix(int size) 
-{
-	int i, j;
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
 			M1[i][j] += M2[i][j];
-			if (M1[i][j] == 2) { M1[i][j] = 1; }
-			cout << M1[i][j] << " ";
+			if (M1[i][j] == 2)
+				M1[i][j] = 1;
 		}
-		cout << endl;
 	}
 }
-void CrossMatrix(int size) 
+void CrossMatrix(int** M1, int** M2, int size)
 {
-	int i, j;
 
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			if (M1[i][j] != M2[i][j]) { M1[i][j] = 0; }
-			cout << M1[i][j] << " ";
+	for (i = 0; i < size; i++) {
+		for (j = 0; j < size; j++)
+		{
+			if (M1[i][j] != M2[i][j])
+				M1[i][j] = 0;
 		}
-		cout << endl;
 	}
 }
-void RingSum(int size) 
+void RingSum(int** M1, int** M2, int size)
 {
-	int i, j;
-
-	for (i = 0; i < size; i++) 
+	for (i = 0; i < size; i++)
 	{
-		for (j = 0; j < size; j++) 
+		for (j = 0; j < size; j++)
 		{
-			if (M1[i][j] == M2[i][j]) { M1[i][j] = 0; }
-			else { M1[i][j] = 1; }
-			cout << M1[i][j] << " ";
+			if (M1[i][j] == M2[i][j])
+				M1[i][j] = 0;
+			else
+				M1[i][j] = 1;
 		}
-		cout << endl;
 	}
 }
-int main()
+void DeleteMass(int** G, int n)
 {
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
-	int i, j, Number, pos, size, first, second, type;
-	cout << "Введите тип задания:\n1-Матрица\n2-Список\n" << endl;
-	cin >> type;
-
-	switch (type) {
-	case 1:
-		cout << "Введите размер графа:" << endl;
-		cin >> size;
-		create(size);
-		cout << "Введите тип операции:\n1-отождествление\n2-стягивание\n3-расщепление\n4-объединение\n5-пересечение\n6-кольц. сумма\n";
-		cin >> Number;
-		switch (Number)
+	for (i = 0; i < n; i++)
+		delete[] G[i];
+	delete[] G;
+}
+void Decart(int** M1, int** M2, int** M5, int size)
+{
+	for (int m = 0; m < size; m++)
+	{
+		for (i = size * m; i < size + size * m; i++)
 		{
-		case 1:
-			cout << "Введите отождествляемые вершины" << endl;
-			cin >> first >> second;
-			identify(size, first - 1, second - 1);
-			for (i = 0; i < size - 1; i++)
+			for (int n = 0; n < size; n++)
 			{
-				for (j = 0; j < size - 1; j++)
+				for (j = size * n; j < size + size * n; j++)
 				{
-					cout << M1[i][j] << ' ';
-				}
-				cout << endl;
-			}
-			break;
-		case 2:
-			cout << "Введите стягивающиеся вершины" << endl;
-			cin >> first >> second;
-			if (M2[first][second] == 1)
-			{
-				constrict(size, first - 1, second - 1);
-				for (i = 0; i < size - 1; i++)
-				{
-					for (j = 0; j < size - 1; j++)
-					{
-						cout << M1[i][j] << ' ';
-					}
-					cout << endl;
+					if ((m == n) && (i == j))
+						M5[i][j] = 0;
+					if ((m == n) && (i != j))
+						M5[i][j] = M1[i - size * m][j - size * n];
+					if ((m != n) && (i - size * m == j - size * n))
+						M5[i][j] = M2[m][n];
+					if ((m != n) && (i - size * m != j - size * n))
+						M5[i][j] = 0;
 				}
 			}
-			else cout << "Невозможно стянуть данные вершины";
-			break;
-		case 3:
-			cout << "Введите вершину для расщепления" << endl;
-			cin >> pos;
-			InitM3(size + 1);
-			split(size, pos - 1);
-
-			for (i = 0; i < size + 1; i++)
-			{
-				for (j = 0; j < size + 1; j++)
-				{
-					cout << M3[i][j] << ' ';
-				}
-				cout << endl;
-			}
-			break;
-		case 4:
-			printf("Вторая матрица\n");
-			InitM1(size);
-			printf("Итоговая матрица\n");
-			SumMatrix(size);
-			break;
-		case 5:
-			printf("Вторая матриц\n");
-			InitM1(size);
-			printf("Итоговая матриц\n");
-			CrossMatrix(size);
-			break;
-		case 6:
-			printf("Вторая матрица\n");
-			InitM1(size);
-			printf("Итоговая матрица\n");
-			RingSum(size);
-			break;
 		}
+	}
+
+}
+
+void main()
+{
+	setlocale(LC_ALL, "Rus");
+	int Number, pos, first, second, size;
+	cout << "Введите размер графа:" << endl;
+	cin >> size;
+
+	int** M1 = new int* [size];
+	for (i = 0; i < size; i++)
+		M1[i] = new int[size];
+
+	int** M2 = new int* [size];
+	for (i = 0; i < size; i++)
+		M2[i] = new int[size];
+
+	int** M3 = new int* [size + 1];
+	for (i = 0; i < size + 1; i++)
+	{
+		M3[i] = new int[size + 1];
+		for (j = 0; j < size + 1; j++)
+			M3[i][j] = 0;
+	}
+
+	int** M4 = new int* [size - 1];
+	for (i = 0; i < size - 1; i++)
+	{
+		M4[i] = new int[size - 1];
+		for (j = 0; j < size - 1; j++)
+			M4[i][j] = 0;
+	}
+
+	int** M5 = new int* [size * size];
+	for (i = 0; i < size*size; i++)
+	{
+		M5[i] = new int[size*size];
+		for (j = 0; j < size*size; j++)
+			M5[i][j] = 0;
+	}
+
+	InitMatrix(M1, size);
+	cout << "\nМатрца смежности графа\n";
+	OutMatrix(M1, size);
+
+	cout << "Введите тип операции:\n1-Отождествление\n2-Стягивание\n3-Расщепление\n4-Объединение\n5-Пересечение\n6-Кольцевая сумма\n7-Декартовое произведение\n8-Выход\n\n";
+	cin >> Number;
+	switch (Number)
+	{
+	case 1:
+		cout << "Введите отождествляемые вершины" << endl;
+		cin >> first >> second;
+		Сontraction(M1, M4, size, first - 1, second - 1);
+		OutMatrix(M4, size - 1);
 		break;
 	case 2:
-		fill();
+		cout << "Введите стягивающиеся вершины" << endl;
+		cin >> first >> second;
+		if (M1[first-1][second-1] == 1)
+		{
+			Сontraction(M1, M4, size, first - 1, second - 1);
+			OutMatrix(M4, size - 1);
+		}
+		else cout << "Невозможно стянуть данные вершины";
 		break;
+	case 3:
+		cout << "Введите вершину для расщепления" << endl;
+		cin >> pos;
+		Split(M1, M3, size, pos - 1);
+		cout<<"\nИтоговая матрица\n";
+		OutMatrix(M3, size + 1);
+		break;
+	case 4:
+		cout<<"\nВторая матрица\n";
+		InitMatrix(M2, size);
+		OutMatrix(M2, size);
+		SumMatrix(M1, M2, size);
+		cout<<"Итоговая матрица\n";
+		OutMatrix(M1, size);
+		break;
+	case 5:
+		cout<<"\nВторая матрица\n";
+		InitMatrix(M2, size);
+		OutMatrix(M2, size);
+		CrossMatrix(M1, M2, size);
+		cout<<"Итоговая матриц\n";
+		OutMatrix(M1, size);
+		break;
+	case 6:
+		cout<<"\nВторая матрица\n";
+		InitMatrix(M2, size);
+		OutMatrix(M2, size);
+		RingSum(M1, M2, size);
+		cout<<"Итоговая матрица\n";
+		OutMatrix(M1, size);
+		break;
+	case 7:
+		cout << "\nВторая матрица\n";
+		InitMatrix(M2, size);
+		OutMatrix(M2, size);
+		Decart(M1, M2, M5, size);
+		cout << "Итоговая матрица\n";
+		OutMatrix(M5, size * size);
+		break;
+	case 8:
+		exit(1);
 	}
+	DeleteMass(M1, size);
+	DeleteMass(M2, size);
+	DeleteMass(M3, size + 1);
+	DeleteMass(M4, size - 1);
+	system("pause>>void");
 }
-
