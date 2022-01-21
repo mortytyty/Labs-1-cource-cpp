@@ -1,4 +1,0 @@
-﻿  lr3.cpp
-C:\Users\ivanp\Desktop\lb3\lr3\lr3.cpp(7,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\ivanp\Desktop\lb3\lr3\lr3.cpp(157,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  lr3.vcxproj -> C:\Users\ivanp\Desktop\lb3\x64\Debug\lr3.exe
